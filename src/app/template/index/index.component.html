@@ -1,0 +1,45 @@
+<section class="story hero">
+  <h1 class="icarusheadline"><br>HUMANkind's<br>great stories</h1>
+  <p class="icarussubhead">Short audio stories for everyone.</p>
+  <div class="herolinks">
+    <a routerLink="/detail">
+      <button type="button" class="btn btn-sm icarusboxlinks">Enjoy Top Story</button>
+    </a>&nbsp;
+    <a routerLink="/about">
+      <button type="button" class="btn btn-sm icarusboxlinks">Learn More</button>
+    </a>
+  </div>
+  <img src="assets/img/_imageeverest.jpg" class="img-fluid" />
+</section>
+
+<div class="container-fluid px-sm-2">
+  <div class="row mx-sm-n2">
+    <div class="col-sm-12 px-sm-2" *ngIf="commonServ.listStory.stories != undefined">
+        <app-story-poster-item [data]="commonServ.listStory.stories[0]" ></app-story-poster-item>
+    </div>
+  </div>
+  <!-- <div class="row mx-sm-n2" *ngIf="storyList != undefined">
+      <div class="col-sm-6 px-sm-2" *ngFor="let item of storyList.AllStory; let i = index" [ngClass]="i == 0 ? 'd-none':''">
+          <app-story-poster-item [data]="item" ></app-story-poster-item>
+      </div>
+  </div> -->
+  <div class="row mx-sm-n2" *ngIf="commonServ.listStory.stories != undefined">
+    
+      <div class="col-sm-6 px-sm-2" *ngFor="let item of commonServ.listStory.stories; let i = index" [ngClass]="i == 0 ? 'd-none':''">
+          <app-story-poster-item [data]="item" ></app-story-poster-item>
+      </div>
+  </div>
+</div>
+
+<!-- Pagination -->
+<nav aria-label="Page navigation example" *ngIf="commonServ.listStory.stories != undefined">
+  <!-- Add class .pagination-lg for larger blocks or .pagination-sm for smaller blocks-->
+  <ul class="pagination icarus">
+    <li class="page-item" [ngClass]="{'isdisabled': currentPage === 0}"><a class="page-link"  aria-label="Previous" (click)="pageChange(currentPage,'prev')"> <span aria-hidden="true">&laquo;</span> <span class="sr-only">Previous</span> </a> </li>
+    <li class="page-item" *ngFor="let item of [].constructor(cal(commonServ.listStory.total)); let i = index" [ngClass]="{'activepage isdisabled': currentPage === i}"><a class="page-link" (click)="pagination(i)" >{{i+1}}</a></li>
+    <li class="page-item" [ngClass]="{'isdisabled': currentPage === [commonServ.listStory.total/10 | number:'1.0-0']-1}"> <a class="page-link" aria-label="Next" (click)="pageChange(currentPage,'next')"> <span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span> </a> </li>
+  </ul>
+  <!-- {{[commonServ.listStory.total/10 | number:'1.0-0'] -1}}
+  {{[commonServ.listStory.total/10 | number:'1.0-0']}}
+  {{[commonServ.listStory.total/10]}} -->
+</nav>

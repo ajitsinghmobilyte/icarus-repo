@@ -1,0 +1,37 @@
+<!-- <div class="story-promoposter" [style.backgroundImage]="'url('+data.img+')'" >
+  <div class="storyinformationholder" [ngClass]="data.themecolor ? 'light' :''">
+    <div class="quickplay"><img src="assets/img/icon_quickplay.svg" height="20px" alt=""/></div>
+    <h1 class="promoheadline">
+        <a routerLink="/detail" >{{data.title}}</a></h1>
+    <p class="promosubhead"><a routerLink="/detail" >{{data.shortdetail}}</a></p>
+    <p class="promospecs"><img src={{data.promoimg}} height="12px">&nbsp;<em class="far fa-clock"></em>&nbsp;{{data.duration}} | {{data.category}}</p>
+  </div>
+</div> -->
+
+<!-- [style.backgroundImage]="'url('+urlcorrect(data.posterImage)+')'"  -->
+
+<div class="story-promoposter" [style.backgroundImage]="'url('+data.posterImage+')'">
+  <!-- {{urlcorrect(data.posterImage)}} -->
+  <div class="storyinformationholder" [ngClass]="data.themecolor ? 'light' :''">
+    <div class="quickplay" (click)="showPlayer(data.genresId)"><img src="assets/img/icon_quickplay.svg" height="20px" alt=""/></div>
+    <h1 class="promoheadline">
+        <a routerLink="/detail/{{data._id}}" >{{data.name}}</a></h1>
+    <p class="promosubhead"><a routerLink="/detail/{{data._id}}" >{{data.overview}}</a></p>
+    <p class="promospecs">
+      <img src="assets/img/rating_r_black_icon.svg" height="12px" *ngIf="data.ratings == 'RESTRICTED'">
+      <img src="assets/img/rating_g_black_icon.svg" height="12px" *ngIf="data.ratings == 'GENERAL AUDIENCES'">
+      <img src="assets/img/rating_pg_black_icon.svg" height="12px" *ngIf="data.ratings == 'PARENTAL GUIDANCE'">
+      &nbsp;<em class="far fa-clock"></em>&nbsp;{{data.audioLength}} | {{data.genresId}}</p>
+  </div>
+  
+  <app-player [data]="data" *ngIf="show === data.genresId" class="CallPlayer"></app-player>
+  <!-- <iframe scrolling="no" *ngIf="show === data.genresId" style="overflow:hidden;width: 100%;height: 100%;border:none;top: 0;position: absolute;left: 0;" scrolling="no" src="/detail/5c62d67cd6cbb0516a09685a"></iframe> -->
+  <!-- <iframe scrolling="no" *ngIf="show === data.genresId" style="overflow:hidden;width: 100%;height: 100%;border:none;top: 0;position: absolute;left: 0;" scrolling="no" src="http://fable.mobilytedev.com:8098/embeddable.html?item=example1&hhhh"></iframe>
+-->
+  <button type="button" *ngIf="show === data.genresId" class="close" (click)="hidePlayer()" style="background: #fff;padding: 0 5px 5px;">
+      <span aria-hidden="true">&times;</span>
+  </button> 
+
+  <!-- http://localhost/player/icarus-audio-player/embeddable.html?item=example1&hhhh -->
+  <!-- <iframe scrolling="no" style="overflow:hidden;width:0;min-width:95%;max-width:95%;height:300px;border:none;" scrolling="no" src="http://localhost/player/icarus-audio-player/embeddable.html?item=example1&hhhh"></iframe> -->
+</div>

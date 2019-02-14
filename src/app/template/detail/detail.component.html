@@ -1,0 +1,105 @@
+<div *ngIf="storyDetail != undefined">
+  <!-- Poster and audio controls -->
+  <div class="row audio controls">
+    <!-- <img src="assets/img/_i.png" class="img-fluid" height="300" alt="Placeholder image"> -->
+    <div class="col-sm-10 col-md-8">
+      <img src={{storyDetail.Story[0].posterImage}} class="rounded img-fluid" height="300" alt="Placeholder image">
+    </div>
+  </div>
+
+  <div class="col-md-6 story details">
+    <!-- Story transcript -->        
+    <div class="story transcript">
+      <br/>
+      <!-- <a class="btn btn-primary transcript"> -->
+        <p class="smallbuttontext"><img src="assets/img/icon_transcriptbuttontext.svg" width="80" (click)="toggle()"></p> 
+      <!-- </a> -->
+      <!-- <div class="transcript" id="collapseExample" [@openClose]="isOpen ? 'open' : 'closed'">
+        <div class="card">
+            <div class="card-body">
+                <p class="transcript">
+                  {{storyDetail.Story[0].description}}
+                  <!-- <span *ngIf="storyDetail.Story[0].description != undefined">Description Not Available</span> --/>
+                </p>
+            </div>
+          </div>
+      </div> -->
+    </div>	  
+  
+    
+      
+    <!-- Story Overview  -->
+    <div>
+      <h3 class="storySponsor"><img class="sponsorlogo" src={{storyDetail.Story[0].sponsorImage}} width="63" height="20" alt=""/>&ensp;Presents  </h3>
+      <h1 class="storyHeadline">{{storyDetail.Story[0].name}}</h1>
+          
+      <p class="storyAbout">
+        {{storyDetail.Story[0].description}}
+        <!-- <span *ngIf="storyDetail.Story[0].description != ''">Description Not Available</span> -->
+      </p>
+    </div>
+    
+  </div>
+  
+    
+  <div class="support container-fluid">	
+  <!-- Image grid - if available -->
+    
+    <div class="row">
+      <div class="col-xl-12 text-center">
+      <div class="storymedia" *ngFor="let image of storyDetail.Story[0].image">
+        <img src={{image}} class="img-fluid" alt="image">
+      </div>
+      </div>
+    </div>
+    
+  </div>	
+    
+    
+    
+  <div class="col-md-6 story details">
+    <!-- Story specs -->
+    <div class="row story specs">
+      <div class="story specs">
+           
+        <div class="rating">
+            <img src="assets/img/rating_r_black.svg" width="125px" *ngIf="storyDetail.Story[0].ratings == 'RESTRICTED'">
+            <img src="assets/img/rating_g_black.svg" width="125px" *ngIf="storyDetail.Story[0].ratings == 'GENERAL AUDIENCES'">
+            <img src="assets/img/rating_pg_black.svg" width="125px" *ngIf="storyDetail.Story[0].ratings == 'PARENTAL GUIDANCE'">
+          <!-- <img src="assets/img/rating_pg_black.svg" width="125px" alt=""/> -->
+        </div>
+        <h1 class="storyData"><i class="fas fa-sliders-h"></i>&nbsp; GENRE 
+          <span class="storyData results" *ngFor="let g of storyDetail.Story[0].genresId">{{g.name}}, </span></h1>
+        <h1 class="storyData"><i class="far fa-clock"></i>&nbsp; RUN TIME <span class="storyData results">{{storyDetail.Story[0].audioLength}}</span></h1>
+        <h1 class="storyData"><i class="far fa-calendar"></i>&nbsp; RELEASED <span class="storyData results">2018</span></h1>
+        <h1 class="storyData"><i class="fas fa-globe"></i>&nbsp; LANGUAGE <span class="storyData results">ENGLISH</span></h1>
+        <br>
+        <h1 class="storyData" *ngFor="let credits of storyDetail.Story[0].credits">{{credits.role}} <span class="storyData results">{{credits.name}}</span></h1>
+      </div>       
+    </div>
+
+    <!-- Related Tags -->        
+    <div class="story tags">
+      <a class="story related tags" href="#" *ngFor="let credits of storyDetail.Story[0].tags">{{credits}}</a>
+    </div>
+        
+  </div>    
+        
+</div>    
+<!-- Related Stories -->
+<!-- <div class="container-fluid px-sm-2">
+    <div class="row mx-sm-n2" *ngIf="storyList != undefined">
+        <div class="col-sm-6 px-sm-2" *ngFor="let item of storyList.AllStory; let i = index" [ngClass]="i > 3 ? 'd-none':''">
+            <app-story-poster-item [data]="item" ></app-story-poster-item>
+        </div>
+    </div>
+</div> -->
+
+<div class="container-fluid px-sm-2">
+  <div class="row mx-sm-n2" *ngIf="commonServ.listStory.stories != undefined">  
+    <div class="col-sm-6 px-sm-2" *ngFor="let item of commonServ.listStory.stories; let i = index" [ngClass]="i > 3 ? 'd-none':''">
+      <app-story-poster-item [data]="item" ></app-story-poster-item>
+    </div>
+  </div>
+</div>
+

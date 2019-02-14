@@ -1,0 +1,191 @@
+<nav class="navbar fixed-top navbar-expand-md">
+  <!-- Navbar brand --> 
+  <a class="navbar-brand" routerLink="/"><img src="assets/img/mark_icarus_black.svg" width="80" alt="Icarus Logo"></a>
+  <!-- Collapsible content -->
+  <div class="mobTopSerach navbar-collapse" id="navbarSupportedContent1">
+    <!-- Search -->
+    <form class="form-inline my-2 my-lg-0" [formGroup]="filterData">
+      <input class="form-control mr-sm-2 search" type="search" formControlName="name" placeholder="Search for stories" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="search()"><img src="assets/img/right_arrow.svg" class="redarrowhover" width="16" alt="submit"></button>
+    </form>
+    &nbsp;<img src="assets/img/icon_filter.svg" width="25" (click)="toggle()">
+    <!-- Links -->
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active d-none d-sm-block"> <a class="nav-link" routerLink="/help"><i class="fas fa-question-circle fa-lg"></i><span class="sr-only">(current)</span></a></li>
+      <!-- <li class="nav-item mobile"> <a class="nav-link mobile" routerLink="/about">Our mission: Organize humankind’s great stories to spread inspiration and wisdom worldwide.<br>
+        <br>
+        <i class="fab fa-instagram fa-md"></i>&ensp;<i class="fab fa-twitter fa-md"></i></a></li> -->
+    </ul>
+  </div>
+</nav>
+
+<div class="story submenu"  [@openClose]="showSubmenu ? 'open' : 'closed'">
+  <!-- <a class="btn btn-primary submenu" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    <img src="assets/img/icon_filter.svg" width="30"> 
+		</a>
+	<div class="collapse container "  [ngClass]="showSubmenu ? 'show' :''" [@openClose]="isOpen ? 'open' : 'closed'"> 
+	-->
+  <div class="container"> 
+    <!-- id="collapseExample" -->
+  <!-- <h6 class="filtersvg"><img src="assets/img/icon_filtertext.svg" width="60px" alt=""/></h6> -->
+  <!-- <br> -->
+	
+	
+	<!-- <div class="filterintrocopy">
+	  <p class="card card-body submenu"> Lorem ipsum dolor sit amet, adipiscing elit. <br>
+	    <br>
+	    </p>
+	</div>
+   -->
+  <p align="right">
+  <a class="btn btn-link" (click)="toggle()" >
+    <img src="assets/img/icon_close_black.svg" width="15" > 
+  </a>
+	</p>
+	<form  (change)="filterFun()" [formGroup]="filterData" >
+	<div class="row submenunavigation" >
+		
+	  <div class="col-md-3">
+			<img src="assets/img/_imagemacklemore.jpg" class="img-fluid promobox1" alt="Placeholder image">
+			<img src="assets/img/fpo_promobox.jpg" class="img-fluid" alt="Placeholder image">
+		
+		</div>
+		
+		<div class="col-md-3">
+			<!-- {{commonServ.topStory != 'undefined' ?'no':'yes'}} -->
+			<h1 class="filter-header">Top FIVE Stories</h1>
+				<ol class="filterolistnostyle" *ngIf="commonServ.topStory != undefined" >
+					<li *ngFor="let item of commonServ.topStory.data; let i = index" [ngClass]="i > 4 ? 'd-none':''">
+						<a class="filter-item ol" routerLink="/detail/{{item._id}}" (click)="toggle()">{{item.name | uppercase}}</a>
+						<p class="genreInfo"><i class="far fa-clock"></i>&nbsp;{{item.audioLength}} | {{item.genresId}}</p>
+					</li>
+				</ol>	
+
+		  <!-- <ol class="filterolistnostyle" *ngIf="commonServ.listStory.stories != undefined" >
+				<li *ngFor="let item of commonServ.listStory.stories; let i = index" [ngClass]="i > 4 ? 'd-none':''">
+					<a class="filter-item ol" routerLink="/detail/{{item._id}}" (click)="toggle()">{{item.name | uppercase}}</a>
+					<p class="genreInfo"><i class="far fa-clock"></i>&nbsp;{{item.audioLength}} | {{item.genresId}}</p>
+				</li>
+			</ol>			 -->
+		</div>
+		
+		<div class="col-md-3">
+			<h1 class="filter-header">Genres</h1>
+				<ul class="filterlistnostyle m-0 p-0">
+					<li>
+						<label class="filter-item" >
+							<img src="assets/img/genre/All.svg"  height="15px" alt=""/>&nbsp; 
+							<input type="checkbox" [checked]="filterData.value.allgenre" formControlName="allgenre" (change)="clearfield(filterData.value.allgenre)"/>								
+							<span>All</span>
+						</label>
+					</li>
+				</ul>
+		  	 <ul class="filterlistnostyle" *ngIf="genres != undefined" formGroupName="gen">
+						<!-- <li>
+							<label class="filter-item" >
+									<img src="assets/img/genre/All.svg" formControlName="allgenre" height="15px" alt=""/>&nbsp; 
+								<span>All</span>
+							</label>
+							<!-- <a class="filter-item" href="#"><img src="assets/img/genre/All.svg" height="15px" alt=""/>&nbsp; All</a> --/>
+						</li> -->
+
+						<li *ngFor="let gen of genres.category; let i= index">
+							<label class="filter-item" >
+								<img src="assets/img/genre/{{gen.name}}.svg" height="15px" alt=""/>&nbsp;
+								<input type="checkbox" name="i" [checked]="filterData.value.allgenre" (change)="addGen(gen._id, $event.target.checked)"/>
+								<span>{{gen.name}}</span>
+							</label>
+						</li>
+
+						<!-- <li *ngFor="let gen of genres.category; let i= index">
+								<mat-checkbox class="example-margin" [(ngModel)]="genres[i]"><img src="assets/img/genre/{{gen.name}}.svg" height="15px" alt=""/>&nbsp; {{gen.name}}</mat-checkbox>
+						</li> -->
+
+
+						<!-- <li *ngFor="let gen of genres.category; let i= index">
+							<a class="filter-item" href="#"><img src="assets/img/genre/{{gen.name}}.svg" height="15px" alt=""/>&nbsp; {{gen.name}}</a>
+						</li> -->
+						
+						 <!-- <li><a class="filter-item" href="#"><img src="assets/img/genre_all.svg" height="15px" alt=""/>&nbsp; All</a></li>
+			  		<li><a class="filter-item" href="#"><img src="assets/img/genre_kids.svg" height="15px" alt=""/>&nbsp; Kids</a></li>
+				 		<li><a class="filter-item" href="#"><img src="assets/img/genre_arts.svg" height="15px" alt=""/>&nbsp; Arts</a></li>
+				 		<li><a class="filter-item" href="#"><img src="assets/img/genre_adventure.svg" height="15px" alt=""/>&nbsp; Adventure</a></li>
+			  		<li><a class="filter-item" href="#"><img src="assets/img/genre_business.svg" height="15px" alt=""/>&nbsp; Business</a></li>
+			  		<li><a class="filter-item" href="#"><img src="assets/img/genre_history.svg" height="15px" alt=""/>&nbsp; History</a></li>
+			  		<li><a class="filter-item" href="#"><img src="assets/img/genre_mythology.svg" height="15px" alt=""/>&nbsp; Mythology</a></li>
+			  		<li><a class="filter-item" href="#"><img src="assets/img/genre_mystery.svg" height="15px" alt=""/>&nbsp; Mystery</a></li>
+				 		<li><a class="filter-item" href="#"><img src="assets/img/genre_fantasy.svg" height="15px" alt=""/>&nbsp; Fantasy</a></li>
+				 		<li><a class="filter-item" href="#"><img src="assets/img/genre_sciencefiction.svg" height="15px" alt=""/>&nbsp; Sci-Fi</a></li>
+				  	<li><a class="filter-item" href="#"><img src="assets/img/genre_sport.svg" height="15px" alt=""/>&nbsp; Sports</a></li>
+				 		<li><a class="filter-item" href="#"><img src="assets/img/genre_humor.svg" height="15px" alt=""/>&nbsp; Humor</a></li>
+				 		<li><a class="filter-item" href="#"><img src="assets/img/genre_drama.svg" height="15px" alt=""/>&nbsp; Drama</a></li> -->
+			</ul>
+		</div>
+	  
+		<div class="col-md-3">
+		  <h1 class="filter-header">Ratings</h1>
+			<ul class="filterlistnostyle">
+				<li>
+					<label class="filter-item" >
+						<input type="radio" formControlName="ratings" value="GENERAL AUDIENCES"/>
+						<img src="assets/img/rating_g_black.svg" height="16px" alt="" class="ratingImg"/>
+					</label>
+				</li>
+				<li>
+					<label class="filter-item" >
+						<input type="radio" formControlName="ratings" value="PARENTAL GUIDANCE"/>
+						<img src="assets/img/rating_pg_black.svg" height="16px" alt="" class="ratingImg"/>
+					</label>
+				</li>
+				<li>
+						<label class="filter-item" >
+							<input type="radio" formControlName="ratings" value="RESTRICTED"/>
+							<img src="assets/img/rating_r_black.svg" height="16px" alt="" class="ratingImg"/>
+						</label>
+				</li>
+		  		<!-- <li><a class="filter-item" href="#"><img src="assets/img/rating_g_black.svg" height="16px" alt=""/></a></li>
+		  		<li><a class="filter-item" href="#"><img src="assets/img/rating_pg_black.svg" height="16px" alt=""/></a></li>
+		  		<li><a class="filter-item" href="#"><img src="assets/img/rating_r_black.svg" height="16px" alt=""/></a></li> -->
+		 </ul>
+			
+			<h1 class="filter-header">Length</h1>
+					<ul class="filterlistnostyle">
+						<li>
+							<label class="filter-item" >
+								<input type="radio" formControlName="videoDuration" value="1" />
+								<span><i class="far fa-clock"></i>&nbsp;Under 5:00</span>
+							</label>
+						</li>
+						<li>
+							<label class="filter-item" >
+								<input type="radio" formControlName="videoDuration" value="2" />
+								<span><i class="far fa-clock"></i>&nbsp;5:00 - 10:00</span>
+							</label>
+						</li>
+						<li>
+							<label class="filter-item" >
+								<input type="radio" formControlName="videoDuration" value="3" />
+								<span><i class="far fa-clock"></i>&nbsp;10:00 - 20:00</span>
+							</label>
+						</li>
+						<li>
+							<label class="filter-item" >
+								<input type="radio" formControlName="videoDuration" value="4" />
+								<span><i class="far fa-clock"></i>&nbsp;20:00 +</span>
+							</label>
+						</li>
+
+						<!-- <li><a class="filter-item" href="#"><i class="far fa-clock"></i>&nbsp;Under 5:00</a></li>
+			  		<li><a class="filter-item" href="#"><i class="far fa-clock"></i>&nbsp;5:00 - 10:00</a></li>
+			  		<li><a class="filter-item" href="#"><em class="far fa-clock"></em> 10:00 - 20:00</a></li>
+						<li><a class="filter-item" href="#"><em class="far fa-clock"></em> 20:00 +</a></li> -->
+					</ul>
+		</div>
+	</div>
+	<!-- <button type="submit">Filter</button> -->
+	</form>
+	
+	
+	
+</div>
+</div>
