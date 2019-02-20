@@ -1,6 +1,6 @@
 import { Component, OnInit,  Input } from '@angular/core';
 import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
-
+import { CommonService } from '../../service/common.service';
 @Component({
   selector: 'app-story-poster-item',
   templateUrl: './story-poster-item.component.html',
@@ -8,24 +8,35 @@ import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browse
 })
 export class StoryPosterItemComponent implements OnInit {
   @Input() data: any;
-  private show:any;
+  public show:any;
+  urlval:any;
   
-  constructor(private sanitizer: DomSanitizer) {}
+  constructor(public sanitizer: DomSanitizer, public commonServ : CommonService,) {
+  }
 
-  ngOnInit() {}
+  ngOnInit() {
+	  //console.log(this.data)
+	  this.urlval = this.sanitizer.bypassSecurityTrustResourceUrl("http://ec2-13-57-236-155.us-west-1.compute.amazonaws.com:8098/api/story/renderPage?id="+this.data._id);
+  }
 
-  // urlcorrect(val){
-  //   console.log(val)
-  //   console.log('after encode',encodeURI(val))
-  //   let url = encodeURI(val);
-  //   // return url.trim();
-  //   return val;
+  urlcorrect(val){
+    let url =  this.sanitizer.bypassSecurityTrustResourceUrl(val);  //encodeURI(val)
+    return val;
+  }
+
+  // ngDoCheck(){
+  //   // console.log(this.commonServ.activeAudio)
+  //   if(this.commonServ.activeAudio && this.commonServ.activeAudio !== this.data._id)
+  //     this.hidePlayer();
   // }
 
-  showPlayer=(id)=>  {this.show = id; }
+  showPlayer=(id)=>  {
+    this.show = id;
+    // this.commonServ.activePlayer(id);
+  }
   hidePlayer=()=> {
     this.show = false;
-    if((<any>window).player !== "undefined") 
-    (<any>window).player.audio.Pause();
+    /* if((<any>window).player !== "undefined") 
+    (<any>window).player.audio.Pause(); */
   }
 }

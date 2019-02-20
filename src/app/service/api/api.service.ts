@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ApiService {
-  public getStoryList = environment.apiURL+"api/search/getStoryList"; //"api/search/searchStory"; 
+  public getStoryList = environment.apiURL+"api/search/getStoryList";
   public searchStory  = environment.apiURL+"api/search/searchStory"; 
   public allGenres    = environment.apiURL+"api/story/allGenres";
   public storyDetail  = environment.apiURL+"api/story/detailStory?storyId=";

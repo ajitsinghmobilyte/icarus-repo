@@ -15,19 +15,13 @@
 <div class="container-fluid px-sm-2">
   <div class="row mx-sm-n2">
     <div class="col-sm-12 px-sm-2" *ngIf="commonServ.listStory.stories != undefined">
-        <app-story-poster-item [data]="commonServ.listStory.stories[0]" ></app-story-poster-item>
+      <app-story-poster-item [data]="commonServ.listStory.stories[0]" ></app-story-poster-item>
     </div>
   </div>
-  <!-- <div class="row mx-sm-n2" *ngIf="storyList != undefined">
-      <div class="col-sm-6 px-sm-2" *ngFor="let item of storyList.AllStory; let i = index" [ngClass]="i == 0 ? 'd-none':''">
-          <app-story-poster-item [data]="item" ></app-story-poster-item>
-      </div>
-  </div> -->
-  <div class="row mx-sm-n2" *ngIf="commonServ.listStory.stories != undefined">
-    
-      <div class="col-sm-6 px-sm-2" *ngFor="let item of commonServ.listStory.stories; let i = index" [ngClass]="i == 0 ? 'd-none':''">
-          <app-story-poster-item [data]="item" ></app-story-poster-item>
-      </div>
+  <div class="row mx-sm-n2" *ngIf="commonServ.listStory.stories != undefined">    
+    <div class="col-sm-6 px-sm-2" *ngFor="let item of commonServ.listStory.stories; let i = index" [ngClass]="i == 0 ? 'd-none':''">
+      <app-story-poster-item [data]="item" ></app-story-poster-item>
+    </div>
   </div>
 </div>
 
@@ -39,7 +33,4 @@
     <li class="page-item" *ngFor="let item of [].constructor(cal(commonServ.listStory.total)); let i = index" [ngClass]="{'activepage isdisabled': currentPage === i}"><a class="page-link" (click)="pagination(i)" >{{i+1}}</a></li>
     <li class="page-item" [ngClass]="{'isdisabled': currentPage === [commonServ.listStory.total/10 | number:'1.0-0']-1}"> <a class="page-link" aria-label="Next" (click)="pageChange(currentPage,'next')"> <span aria-hidden="true">&raquo;</span> <span class="sr-only">Next</span> </a> </li>
   </ul>
-  <!-- {{[commonServ.listStory.total/10 | number:'1.0-0'] -1}}
-  {{[commonServ.listStory.total/10 | number:'1.0-0']}}
-  {{[commonServ.listStory.total/10]}} -->
 </nav>

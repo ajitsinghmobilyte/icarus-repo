@@ -30,71 +30,86 @@ import { CommonService } from '../../service/common.service';
 export class HeaderComponent implements OnInit {
   showSubmenu:any = false;
   private genres:any;
-  private filterData:any;
-  private storyList:any;
-
-  constructor(private commonServ : CommonService, fb: FormBuilder) {
+  public filterData:any;
+  public storyList:any;
+  private formactive:boolean= false;
+  public allGenresList:any;
+  
+  constructor(public commonServ : CommonService,public fb: FormBuilder) {
     this.filterData = fb.group({
       name:[''],
       ratings: [''],
       videoDuration: [''],
       allgenre:false,
-      gen: fb.array([])
+      gen: fb.array,
     });
+
+    setTimeout(()=>{
+      this.allGenresList = this.commonServ.allGenresList.category;      
+      const controls = this.allGenresList.map(c =>  new FormControl(false));
+      this.filterData = fb.group({
+        name:[''],
+        ratings: [''],
+        videoDuration: [''],
+        allgenre:false,
+        gen:this.fb.array(controls)
+      });
+      this.formactive = true;      
+    },2000);
+
   }
 
   ngOnInit() {
-    this.commonServ.genreslist().subscribe( 
-        data => this.genres = data,
-        error => console.log(error)
-    );
-
-    // this.commonServ.storylist().subscribe(
-    //   data => {this.storyList = data; console.log(data)},
-    //   error => console.log(error)
-    // );
   }
 
-  toggle=()=> this.showSubmenu = !this.showSubmenu;
+
+  toggle=()=> {this.showSubmenu = !this.showSubmenu; }
 
   filterFun=()=>{
-    console.log(this.filterData.value);
     this.search();
-    // this.commonServ.storyItem(this.filterData.value, 1, 10);
   }
 
- addGen(name:string, isChecked: boolean) {
-    const arrayGen = <FormArray>this.filterData.controls.gen;
-    if(isChecked) {
-      arrayGen.push(new FormControl(name));
+  checkAll(val){
+    console.log(val);
+    
+    if(val) {
+      // console.log(this.filterData.value.gen)
+      this.filterData.value.gen.map((item,i)=>{
+        this.filterData.value.gen[i]= true;
+      })
     } else {
-      let index = arrayGen.controls.findIndex(x => x.value == name)
-      arrayGen.removeAt(index);
-    }    
-    if(this.filterData.controls.gen.length < this.genres.category.length)
-      {
-        this.filterData.value.allgenre = false;
-      }
+      this.filterData.value.gen.map((item,i)=>{
+        this.filterData.value.gen[i]= false;
+      })
+    } 
+    console.log(this.filterData.value.gen) 
+    this.search();    
   }
 
-  clearfield(val){
-    // if(!val)
-      this.filterData.value.gen = {}
-      this.filterData.controls.gen.value = {}
+  singlecheck(index){
+    console.log(index)
+    console.log(this.filterData.value)
+    this.filterData.value.gen.map((item,i)=>{
+      if(this.filterData.value.allgenre)
+        {
+          console.log(index)
+          if(i===index)
+            {this.filterData.value.gen[i]= true;
+            this.filterData.value.allgenre= false;}
+          else
+            this.filterData.value.gen[i]= false;
+        }
+    })
   }
 
   search=()=>{
-    this.commonServ.storyItem(this.filterData.value, 1, 11);
+    this.commonServ.storyItem(this.filterData.value, 1, 11, 'header');
   }
 
-  clearFilter(){
-    // console.log('dsasfsdaf')
-    this.filterData.controls.name.value = '';
-    this.filterData.controls.ratings.value = '';
-    this.filterData.controls.videoDuration.value = '';
-    this.filterData.controls.allgenre.value = false;    
-    this.filterData.controls.gen.value = {};
-    this.toggle;
+  clearfilter(){
+    this.filterData.reset();
+    console.log(this.filterData.value);
+    this.search()
   }
 
 }

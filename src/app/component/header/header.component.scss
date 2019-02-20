@@ -140,15 +140,18 @@ a.nav-link.mobile:hover {
 .navbar-toggler.collapsed .bottom-bar {
   transform: rotate(0);
 }
+.filterlistnostyle{
+    .filter-item{
+        cursor: pointer; position: relative;
+        input{visibility: hidden; position: absolute;}
+        input:checked+span{color:#CC0000}
 
-.filter-item{
-    cursor: pointer; position: relative;
-    input{visibility: hidden; position: absolute;}
-    input:checked+span{color:#CC0000}
-
-    input:checked+.ratingImg{background: #CC0000}
+        input:checked+.ratingImg{background: #CC0000}
+    }
+    .active .filter-item{color:#CC0000}
 }
-
+.clearfilter{cursor: pointer;}
+.notshow{visibility: hidden; position: absolute; z-index: -5;}
 /* END OF NAV STYLES ---------------------------------------------------------------*/
 
 

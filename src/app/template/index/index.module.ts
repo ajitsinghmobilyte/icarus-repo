@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {MatPaginatorModule} from '@angular/material/paginator';
 
@@ -14,6 +14,7 @@ import {ComponentModule} from '../../component/component.module';
     IndexRoutingModule,
     ComponentModule,
     MatPaginatorModule
-  ]
+  ],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
 })
 export class IndexModule { }

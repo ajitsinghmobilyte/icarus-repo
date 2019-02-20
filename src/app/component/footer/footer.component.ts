@@ -8,10 +8,10 @@ import { CommonService } from '../../service/common.service';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent implements OnInit {
-  private formData:any;
-  private Notification:any;
-  private response:any = {message:''}
-  constructor(private commonServ : CommonService, fb: FormBuilder) {
+  public formData:any;
+  public Notification:any;
+  public response:any = {message:''}
+  constructor(public commonServ : CommonService,public fb: FormBuilder) {
     this.formData = fb.group({
       email:['', Validators.required],
     });

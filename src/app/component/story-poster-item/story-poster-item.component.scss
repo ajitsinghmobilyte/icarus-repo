@@ -78,39 +78,6 @@
     margin-right: 20px;
 }
 
-  
-//   .story-promoposter.first {
-//       background-image: url(assets/img/_imagetintin.jpg);
-//       background-position: center;
-//       background-size: cover;
-//       background-repeat: no-repeat;
-//       border-radius: 10px;
-//   }
-  
-//   .story-promoposter.second {
-//       background-image: url(assets/img/_quickplay.png);
-//       background-position: center;
-//       background-size: cover;
-//       background-repeat: no-repeat;
-//       border-radius: 10px;
-//   }
-  
-//   .story-promoposter.third {
-//       background-image: url(assets/img/_hero.jpg);
-//       background-position: center;
-//       background-size: cover;
-//       background-repeat: no-repeat;
-//       border-radius: 10px;
-//   }
-//   .story-promoposter.fourth {
-//       background-image: url(assets/img/_imagemacklemore.jpg);
-//       background-position: center;
-//       background-size: cover;
-//       background-repeat: no-repeat;
-//       border-radius: 10px;
-//   }
-
-
 .CallPlayer{
     height: 100%;
     width: 100%;
@@ -118,4 +85,7 @@
     top: 0;
     position: absolute;
     background: rgba(0,0,0,0.7);
+}
+.closeplayer{
+    background: #fff;padding: 0 5px 5px; position: absolute; right:10px; top:10px; z-index: 5;
 }

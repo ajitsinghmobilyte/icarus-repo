@@ -14,12 +14,12 @@
     left: 0;
   }
   
-  .playerContainer svg
+ /* .playerContainer svg
   {
-  /*
+  
     width:100%;
-    height:100%;*/
-  }
+    height:100%;
+  }*/
   
   .playerContainer .layerFront
   {
@@ -97,7 +97,12 @@
     top: 50%;
     transform: translateY(-50%);
   }
-  
+  .layerFront p {
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    width: 100%;
+}
   
   
   

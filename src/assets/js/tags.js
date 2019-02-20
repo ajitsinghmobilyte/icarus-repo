@@ -31,12 +31,10 @@ IcarusAudioPlayer.Tags.prototype.RelativeToAbsolute = function(base, relative)
 IcarusAudioPlayer.Tags.prototype.Init = function()
 {
 	var self = this;
-	
 	var u = this.RelativeToAbsolute(window.location.href, this.tagPath);
-	
 	jsmediatags.read(u, 
 	{
-  		 onSuccess: function(tag)   { self.OnJsMediaTagsSuccess(tag); }
+  		onSuccess: function(tag)   { self.OnJsMediaTagsSuccess(tag); }
   		,onError:   function(error) { self.OnJsMediaTagsError(error); }
     
   	} );
