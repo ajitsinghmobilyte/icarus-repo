@@ -719,3 +719,6 @@ body {
   }
   }
   
+.playerInfo + svg {
+    display: none !important;
+}

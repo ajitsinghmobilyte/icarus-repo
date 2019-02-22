@@ -32,7 +32,7 @@ export class CommonService {
     );
     
     this.http.get(this.apiLink.allGenres).pipe( retry(3), catchError(this.handleError)).subscribe( 
-      data => {this.allGenresList = data; console.log(data)},
+      data => {this.allGenresList = data;}, // console.log(data)
       error => console.log(error)
     );
   }
@@ -70,9 +70,7 @@ export class CommonService {
       catchError(this.handleError)
     ).subscribe( 
       data => {
-        // console.log(data)
         this.listStory = data;
-        // console.log(this.listStory)
         return this.listStory;
       },
       error => console.log(error)

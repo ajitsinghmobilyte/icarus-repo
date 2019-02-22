@@ -23,8 +23,8 @@
       &nbsp;<em class="far fa-clock"></em>&nbsp;{{data.audioLength}} | {{data.genresId}}</p>
   </div>
  
-  <!-- <app-player [data]="data" *ngIf="show === data._id" class="CallPlayer"></app-player> -->
-  <iframe scrolling="no" *ngIf="show === data._id" style="overflow:hidden;width: 100%;height: 100%;border:none;top: 0;position: absolute;left: 0;" scrolling="no" [src]="urlval"></iframe>
+  <app-player [data]="data" *ngIf="show === data._id" class="CallPlayer"></app-player>
+  <!--<iframe scrolling="no" *ngIf="show === data._id" style="overflow:hidden;width: 100%;height: 100%;border:none;top: 0;position: absolute;left: 0;" scrolling="no" [src]="urlval"></iframe>-->
   <button type="button" *ngIf="show === data._id" class="close closeplayer" (click)="hidePlayer()" >
       <span aria-hidden="true">&times;</span>
   </button> 

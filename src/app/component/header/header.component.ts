@@ -32,7 +32,7 @@ export class HeaderComponent implements OnInit {
   private genres:any;
   public filterData:any;
   public storyList:any;
-  private formactive:boolean= false;
+  public formactive:boolean= false;
   public allGenresList:any;
   
   constructor(public commonServ : CommonService,public fb: FormBuilder) {

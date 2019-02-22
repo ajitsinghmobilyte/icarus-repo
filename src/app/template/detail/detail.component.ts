@@ -52,7 +52,7 @@ export class DetailComponent implements OnInit {
 
   storyDetailFun(){
     this.commonServ.storydetail(this.route.snapshot.paramMap.get('id')).subscribe( 
-      data => {this.storyDetail = data; console.log(data)},
+      data => {this.storyDetail = data;}, // console.log(data)
       error => console.log(error)
     );
   }
