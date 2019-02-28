@@ -1,14 +1,14 @@
 <nav class="navbar fixed-top navbar-expand-md">
   <!-- Navbar brand --> 
-  <a class="navbar-brand" routerLink="/"><img src="assets/img/mark_icarus_black.svg" width="80" alt="Icarus Logo"></a>
+  <a class="navbar-brand" routerLink="/"><img src="assets/img/icarus_black_mark.svg" width="80" alt="Icarus Logo"></a>
   <!-- Collapsible content -->
   <div class="mobTopSerach navbar-collapse" id="navbarSupportedContent1">
     <!-- Search -->
     <form class="form-inline my-2 my-lg-0" [formGroup]="filterData">
-      <input class="form-control mr-sm-2 search" type="search" formControlName="name" placeholder="Search for stories" aria-label="Search">
+      <input class="form-control mr-sm-2 search" type="text" formControlName="name" placeholder="Search for stories" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="search()"><img src="assets/img/right_arrow.svg" class="redarrowhover" width="16" alt="submit"></button>
     </form>
-    &nbsp;<img src="assets/img/icon_filter.svg" width="25" (click)="toggle()">
+    &nbsp;<img class="filtericon" src="assets/img/icon_filter.svg" width="25" (mouseover)="toggle(true)" (mouseout)="toggle(false)">
     <!-- Links -->
     <ul class="navbar-nav ml-auto">
       <li class="nav-item active d-none d-sm-block"> <a class="nav-link" routerLink="/help"><i class="fas fa-question-circle fa-lg"></i><span class="sr-only">(current)</span></a></li>
@@ -19,11 +19,11 @@
   </div>
 </nav>
 
-<div class="story submenu"  [@openClose]="showSubmenu ? 'open' : 'closed'">
+<div class="story submenu" (mouseover)="toggle(true)" (mouseout)="toggle(false)" [@openClose]="showSubmenu ? 'open' : 'closed'">
   <div class="container" *ngIf="formactive"> 
   
   <p align="right">
-  <a class="btn btn-link" (click)="toggle()" >
+  <a class="btn btn-link" (click)="commonServ.cleartagval();"> 
     <img src="assets/img/icon_close_black.svg" width="15" > 
   </a>
 	</p>
@@ -117,7 +117,7 @@
 							</label>
 						</li>
 					</ul>
-			<h1 class="filter-header clearfilter" (click)="clearfilter()">Clear Filter</h1>
+			<h1 class="filter-header clearfilter" (click)="commonServ.cleartagval(); clearfilter()">Clear Filter</h1>
 		</div>
 	</div>
 	</form>

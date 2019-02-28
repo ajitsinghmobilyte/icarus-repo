@@ -6,7 +6,7 @@ import { PlayerComponent } from './player/player.component';
 
 @NgModule({
   declarations: [ StoryPosterItemComponent, PlayerComponent],
-  exports: [StoryPosterItemComponent],
+  exports: [StoryPosterItemComponent, PlayerComponent],
   imports: [
     CommonModule, RouterModule
   ],

@@ -2,7 +2,9 @@
   <!-- Poster and audio controls -->
   <div class="row audio controls">
     <div class="col-sm-10 col-md-8">
-      <img [src]="storyDetail.Story[0].posterImage || ''" class="rounded img-fluid" height="300" alt="Placeholder image">      
+      <!-- <img [src]="storyDetail.Story[0].posterImage || ''" class="rounded img-fluid" height="300" alt="Placeholder image">       -->
+      <div class="audioplayer"><iframe scrolling="no" style="overflow:hidden;width: 100%;height: 300px;border:none;top: 0;position: relative;left: 0;" scrolling="no" [src]="urlval"></iframe>
+      </div>
     </div>
   </div>
 
@@ -21,13 +23,13 @@ width="500" style="height: 300px">
 <a href="http://fable.mobilytedev.com/upload/storyVideos/5c2fa9b9d212973cfee4c0ee/dummy.srt">file not Supported?</a>
 </object> -->
 
-      <div class="transcript" id="collapseExample" [@openClose]="isOpen ? 'open' : 'closed'">
+      <div class="transcript text-left" id="collapseExample" *ngIf="isOpen" [@openClose]="isOpen ? 'open' : 'closed'">
         <div class="card">
             <div class="card-body">
-                <p class="transcript">
-                  {{storyDetail.Story[0].transcriptText}}
+                <div class="transcript" [innerHTML]="transform(storyDetail.Story[0].transcriptText)">
+                  <!-- {{storyDetail.Story[0].transcriptText}} -->
                   <!-- <span *ngIf="storyDetail.Story[0].description != undefined">Description Not Available</span> -->
-                </p>
+                </div>
             </div>
           </div>
       </div>
@@ -39,8 +41,8 @@ width="500" style="height: 300px">
       <h1 class="storyHeadline">{{storyDetail.Story[0].name}}</h1>
           
       <p class="storyAbout">
-        {{storyDetail.Story[0].description}}
-        <!-- <span *ngIf="storyDetail.Story[0].description != ''">Description Not Available</span> -->
+        <!-- {{storyDetail.Story[0].description}} -->
+        {{storyDetail.Story[0].overview}}
       </p>
     </div>
   </div>
@@ -51,12 +53,18 @@ width="500" style="height: 300px">
     <div class="row">
       <div class="col-xl-12 text-center">
       <div class="storymedia" *ngFor="let video of storyDetail.Story[0].videos">
-        <video width="100%" controls>
-          <source src={{video.url}} type="video/ogg">
-          <source src={{video.url}} type="video/mp4">
-            <track label="English" kind="subtitles" srclang="en" *ngIf="video.transcript" [src]="video.transcript" default> 
-          Your browser does not support HTML5 video.
-        </video>
+        <div *ngIf="checkVideoUrl(video.url); else elseBlock">
+            <iframe width="100%" height="345" src={{video.url}}>
+            </iframe>
+        </div>
+        <ng-template #elseBlock>
+            <video width="100%" controls>
+              <source src={{video.url}} type="video/ogg">
+              <source src={{video.url}} type="video/mp4">
+                <track label="English" kind="subtitles" srclang="en" *ngIf="video.transcript" [src]="video.transcript" default> 
+              Your browser does not support HTML5 video.
+            </video>
+        </ng-template>
       </div>
       <div class="storymedia" *ngFor="let image of storyDetail.Story[0].image">
         <img [src]="image || ''" class="img-fluid" alt="image">
@@ -68,12 +76,11 @@ width="500" style="height: 300px">
   <div class="col-md-6 story details">
     <!-- Story specs -->
     <div class="row story specs">
-      <div class="story specs">
-           
+      <div class="story specs">           
         <div class="rating">
-            <img src="assets/img/rating_r_black.svg" width="125px" *ngIf="storyDetail.Story[0].ratings == 'RESTRICTED'">
-            <img src="assets/img/rating_g_black.svg" width="125px" *ngIf="storyDetail.Story[0].ratings == 'GENERAL AUDIENCES'">
-            <img src="assets/img/rating_pg_black.svg" width="125px" *ngIf="storyDetail.Story[0].ratings == 'PARENTAL GUIDANCE'">
+            <img src="assets/img/rating_r_black.svg" style="max-height: 14px;width: auto;" *ngIf="storyDetail.Story[0].ratings == 'RESTRICTED'">
+            <img src="assets/img/rating_g_black.svg" style="max-height: 14px;width: auto;" *ngIf="storyDetail.Story[0].ratings == 'GENERAL AUDIENCES'">
+            <img src="assets/img/rating_pg_black.svg" style="max-height: 14px;width: auto;" *ngIf="storyDetail.Story[0].ratings == 'PARENTAL GUIDANCE'">
           <!-- <img src="assets/img/rating_pg_black.svg" width="125px" alt=""/> -->
         </div>
         <h1 class="storyData"><i class="fas fa-sliders-h"></i>&nbsp; GENRE 
@@ -88,7 +95,7 @@ width="500" style="height: 300px">
 
     <!-- Related Tags -->        
     <div class="story tags">
-      <a class="story related tags" href="#" *ngFor="let credits of storyDetail.Story[0].tags">{{credits}}</a>
+      <a class="story related tags" *ngFor="let credits of storyDetail.Story[0].tags"  (click)="commonServ.addtag(credits)">{{credits}}</a>
     </div>        
   </div>
 </div>    
@@ -102,9 +109,27 @@ width="500" style="height: 300px">
 </div> -->
 
 <div class="container-fluid px-sm-2">
-  <div class="row mx-sm-n2" *ngIf="commonServ.listStory.stories != undefined">  
-    <div class="col-sm-6 px-sm-2" *ngFor="let item of commonServ.listStory.stories; let i = index" [ngClass]="i > 3 ? 'd-none':''">
-      <app-story-poster-item [data]="item" ></app-story-poster-item>
+  <div class="row mx-sm-n2" *ngIf="commonServ.RelatedStoryList != undefined">  
+    <div class="col-sm-6 px-sm-2" *ngFor="let item of commonServ.RelatedStoryList.data; let i = index" [ngClass]="i > 3 ? 'd-none':''">
+      <!-- <app-story-poster-item [data]="item" ></app-story-poster-item> -->
+      <div class="story-promoposter" [ngStyle]="{'background-image': 'url('+item.playerImage+')'}" >
+          <a routerLink="/detail/{{item._id}}" class="postelink"></a>
+          <div class="storyinformationholder" [ngClass]="!item.themeColor|| show === item._id ? '':'light'">
+            <div class="quickplay" (click)="showPlayer(item._id); changeColor(false)"><img src="assets/img/icon_quickplay.svg" height="20px" alt=""/></div>
+            <h1 class="promoheadline">
+                <a routerLink="/detail/{{item._id}}" >{{item.name}}</a></h1>
+            <p class="promosubhead"><a routerLink="/detail/{{item._id}}" >{{item.description}}</a></p>
+            <p class="promospecs">
+                <img [src]="!item.themeColor || show === item._id ? 'assets/img/rating_r_black_icon.svg':'assets/img/rating_r_white_icon.svg'" height="12px" *ngIf="item.ratings == 'RESTRICTED'">
+                <img [src]="!item.themeColor || show === item._id ? 'assets/img/rating_g_black_icon.svg': 'assets/img/rating_r_white_icon.svg'" height="12px" *ngIf="item.ratings == 'GENERAL AUDIENCES'">
+                <img [src]="!item.themeColor || show === item._id ? 'assets/img/rating_pg_black_icon.svg':'assets/img/rating_pg_white_icon.svg'" height="12px" *ngIf="item.ratings == 'PARENTAL GUIDANCE'">
+              &nbsp;&nbsp;&nbsp;&nbsp;<em class="far fa-clock"></em> {{item.audioLength}}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{{addspace(item.genresId)}}</p>
+          </div>        
+          <app-player [data]="item" *ngIf="show === item._id" class="CallPlayer"></app-player>
+          <button type="button" *ngIf="show === item._id" class="close closeplayer" (click)="hidePlayer();  changeColor(true)" >
+              <span aria-hidden="true">&times;</span>
+          </button> 
+        </div>
     </div>
   </div>
 </div>

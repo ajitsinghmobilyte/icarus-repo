@@ -1,5 +1,6 @@
 import { Component, OnInit , OnChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { DomSanitizer, SafeResourceUrl, SafeUrl } from '@angular/platform-browser';
 import { CommonService } from '../../service/common.service';
 import { empty } from 'rxjs';
 import {PageEvent} from '@angular/material';
@@ -20,11 +21,16 @@ export class IndexComponent implements OnInit {
   public Math:any;
   private pageupdate:number;
 
-  constructor( public commonServ : CommonService, ) {}
+  public show:any = 123;
+  urlval:any;
+  ActiveColor:boolean = true;
+
+  constructor( public sanitizer: DomSanitizer, public commonServ : CommonService, ) {this.commonServ.activepage = 'index';}
 
   ngOnInit() {
     window.scroll(0,0);
-    this.commonServ.storyItem({},1,this.count , 'page');    
+    this.commonServ.storyItem({},1,this.count , 'page');  
+    // this.urlval = this.sanitizer.bypassSecurityTrustResourceUrl("http://ec2-13-56-44-143.us-west-1.compute.amazonaws.com:8098/api/story/renderPage?id="+this.data._id);  
   }
 
   ngDoCheck(){
@@ -53,5 +59,38 @@ export class IndexComponent implements OnInit {
       return Math.round(no/this.count)
   }
 
+
+
+  /*player code*/
+  urlcorrect(val){
+    let url =  this.sanitizer.bypassSecurityTrustResourceUrl(val);  //encodeURI(val)
+    return val;
+  }
+  changeColor(val){this.ActiveColor = val;}
+
+  showPlayer=(id)=>  {
+    if(this.show !== id && this.show !== 123)
+      {
+        this.show = 123;
+        //console.log((<any>window).player !== "undefined")
+        if((<any>window).player !== "undefined") 
+        (<any>window).player.audio.Pause();
+      setTimeout(()=>{this.show = id},100)    
+      }
+      else this.show = id;
+  }
+  hidePlayer=()=> {
+    this.show = 123;
+    if((<any>window).player !== "undefined") 
+    (<any>window).player.audio.Pause(); /* */
+  }
+  urldata(id){
+    return this.sanitizer.bypassSecurityTrustResourceUrl("http://ec2-13-56-44-143.us-west-1.compute.amazonaws.com:8098/api/story/renderPage?id="+id);
+  }
+
+  addspace(val){
+    let data = val.toString()
+    return  data.replace(/,/g, ",  ");
+  }
 
 }

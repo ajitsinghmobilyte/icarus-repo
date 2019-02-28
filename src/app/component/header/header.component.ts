@@ -63,7 +63,7 @@ export class HeaderComponent implements OnInit {
   }
 
 
-  toggle=()=> {this.showSubmenu = !this.showSubmenu; }
+  toggle=(val)=> {this.showSubmenu = val; }
 
   filterFun=()=>{
     this.search();

@@ -4,9 +4,10 @@
 
 export const environment = {
   production: false,
-  //apiURL:'http://10.10.30.76:8098/'
+  //apiURL:'http://10.10.30.75:8098/'
   //apiURL:'http://fable.mobilytedev.com:8098/',
-  apiURL:'http://ec2-13-57-236-155.us-west-1.compute.amazonaws.com:8098/'
+  //apiURL:'http://ec2-13-57-236-155.us-west-1.compute.amazonaws.com:8098/'
+  apiURL:'http://ec2-13-56-44-143.us-west-1.compute.amazonaws.com:8098/'
 };
 
 /*

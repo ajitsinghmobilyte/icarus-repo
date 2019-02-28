@@ -162,13 +162,15 @@
   .posterPanel
   {	
   text-align:center;
-  border-radius:25px;
+  border-radius:10px;
   background-repeat: no-repeat;
   background-position: 50% 75%; 
   position: relative;
   background-size:280%;
   }
-  
+  .layerFront svg#svg877 {
+    width: 100%;
+}
   
   /*
   .posterPanel img

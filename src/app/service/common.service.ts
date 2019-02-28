@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable, throwError , BehaviorSubject } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
-
 import { ApiService} from './api/api.service';
 
 const httpOptions = {
@@ -24,8 +24,11 @@ export class CommonService {
   public filterupdate:boolean;
   public activeAudio:any;
   public allGenresList:any;
+  public hideHeroBanner=false;
+  public activepage:string;
+  public RelatedStoryList:any;
 
-  constructor(public http: HttpClient, public apiLink : ApiService) {
+  constructor(public http: HttpClient, public apiLink : ApiService, private router: Router) {
     this.http.get(this.apiLink.topstory).pipe( retry(3), catchError(this.handleError)).subscribe( 
       data => {this.topStory = data;},
       error => console.log(error)
@@ -37,13 +40,21 @@ export class CommonService {
     );
   }
   
- 
-  storyItem=(values, page, count, callby)=>{
-    // delete values.allgenre;
-    // console.log(values, page, count)
+  cleartagval(){
+    this.searchItem.tags = '';
+  }
+  addtag(val){
+    // console.log(val)
+    this.searchItem.tags = val;
+    this.storyItem({},1,this.searchItem.count, "tags");
+  }
 
+  storyItem=(values, page, count, callby)=>{
+    // console.log( values, page, count, callby)
+    
     if (callby === "header")
     {
+      this.hideHeroBanner = true;
       this.searchItem.name = values.name || '';      
       const selectedOrderIds =[] ;
       values.gen.map((v, i) => v ? selectedOrderIds.push(this.allGenresList.category[i]._id) : null)
@@ -57,11 +68,23 @@ export class CommonService {
       // this.searchItem.genresId = values.genresId || '';
       this.searchItem.videoDuration = values.videoDuration || '';
       this.filterupdate = true;
+      if(this.activepage === 'detail')
+        this.router.navigate(['/index']);
+      
     }
-    else{
-      this.searchItem.count = count;
-      this.searchItem.page = page;
-      this.filterupdate = false;
+    else {
+      if(callby === "tags")
+      {
+        this.searchItem.page = page;
+        this.hideHeroBanner = true;
+        this.filterupdate = true;
+        if(this.activepage === 'detail')
+          this.router.navigate(['/index']);
+      }else{
+        this.searchItem.count = count;
+        this.searchItem.page = page;
+        this.filterupdate = false;
+      }
     }
 
     let body = this.searchItem; //{name:'', tags:'', ratings:'RESTRICTED', videoDuration:'', count:'', genresId:{} };
@@ -103,7 +126,7 @@ export class CommonService {
 
   activePlayer(id){
     if(this.activeAudio !== id)
-    this.activeAudio = id;
+      this.activeAudio = id;    
   }
   private handleError(error) {
     if (error.error instanceof ErrorEvent) {
@@ -119,4 +142,11 @@ export class CommonService {
     // return an observable with a user-facing error message
     return throwError('Something bad happened; please try again later.');
   };
+
+  relatedStoryAPI(id){
+    this.http.get(this.apiLink.relativeStory+id).pipe( retry(3), catchError(this.handleError)).subscribe( 
+      data => {this.RelatedStoryList =  data;},
+      error => console.log(error)
+    );     
+  }
 }

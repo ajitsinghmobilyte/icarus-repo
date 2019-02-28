@@ -5,7 +5,7 @@ import { DetailRoutingModule } from './detail-routing.module';
 import { DetailComponent } from './detail.component';
 
 @NgModule({
-  declarations: [DetailComponent],
+  declarations: [DetailComponent, ],
   imports: [
     CommonModule,
     DetailRoutingModule,

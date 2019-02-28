@@ -18,9 +18,10 @@ export class PlayerComponent implements OnInit {
 		var optionScheme 	 = "default";
     var optionDisplayName= "Untitled";
     
-    //console.log(this.data)
+    console.log(this.data)
     optionItem		   = "example1";
-    optionPathTag    = "../"+this.data.audio.replace(/^https?:\/\//,'');
+    let audiofolder = this.data.audio.split('/')[this.data.audio.split('/').length - 2];
+    optionPathTag    = "./upload/storyAudio/"+audiofolder+'/'+this.data.audioName; //"../"+this.data.audio.replace(/^https?:\/\//,'');
     optionPathAudio  = this.data.audio+"?"+ Math.random(); //"https://sample-videos.com/audio/mp3/crowd-cheering.mp3?";
     optionPathPoster = this.data.posterImage;
     optionDisplayName = "The story of the most interesting man in the world";

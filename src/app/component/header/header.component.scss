@@ -7,6 +7,7 @@
     background-color: #fff;
     border-bottom: 1px solid #E4E4E4;
 }
+.navbar{padding: 0 1rem;}
 .navbar-brand {
     margin: 10px 26px 10px 10px;
 }
@@ -152,6 +153,8 @@ a.nav-link.mobile:hover {
 }
 .clearfilter{cursor: pointer;}
 .notshow{visibility: hidden; position: absolute; z-index: -5;}
+.filtericon{padding: 31px 0}
+
 /* END OF NAV STYLES ---------------------------------------------------------------*/
 
 

@@ -52,6 +52,9 @@
       letter-spacing: 0.05em;
       margin-bottom: 8px;
       margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: baseline;
   }
   .storySponsorleft {
       margin-left: auto;
@@ -189,9 +192,9 @@
   .img-fluid.about {
       max-width: 700px;
   }
-  .sponsorlogo {width: auto;
-    height: 100%;
-    max-height: 50px;
-    max-width: 110px;}
+  .sponsorlogo { width: auto;
+    height: auto;
+    max-height: 30px;
+    max-width: 70px;}
   
   /* END OF STORY STYLES ---------------------------------------------------------------*/

@@ -1,3 +1,4 @@
+
 .story-promoposter {
     height: 550px;
     padding-top: 40px;
@@ -15,6 +16,7 @@
     position: absolute;
     width: 100%;
     bottom: 0px;
+    z-index: 1;
     /*---border: 1px solid #8AC007;-----*/
     // a{color:#000}
 }
@@ -84,8 +86,9 @@
     display: block;
     top: 0;
     position: absolute;
-    background: rgba(0,0,0,0.7);
+    background: rgba(255, 255, 255, 0.8);
 }
 .closeplayer{
     background: #fff;padding: 0 5px 5px; position: absolute; right:10px; top:10px; z-index: 5;
 }
+.postelink{ display: block; height: 100%; width: 100%; position: absolute; top: 0;}

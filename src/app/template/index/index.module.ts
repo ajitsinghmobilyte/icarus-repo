@@ -5,6 +5,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import { IndexRoutingModule } from './index-routing.module';
 import { IndexComponent } from './index.component';
 import {ComponentModule} from '../../component/component.module';
+// import { PlayerComponent } from '../../component/player/player.component';
 // import { StoryPosterItemComponent } from '../../component/story-poster-item/story-poster-item.component';
 
 @NgModule({

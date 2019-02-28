@@ -11,6 +11,7 @@ export class ApiService {
   public storyDetail  = environment.apiURL+"api/story/detailStory?storyId=";
   public subscribapi  = environment.apiURL+"api/users/userSubscribe";
   public topstory     = environment.apiURL+"api/story/getTopFiveStories";
+  public relativeStory= environment.apiURL+"api/story/getRelatedStories?storyId=";
 
   constructor() { }
 }
